@@ -1,27 +1,64 @@
+:root {
+	--anti-flash: #eaeaeb;
+	--anti-flash-100: #2e2e30;
+	--anti-flash-200: #5c5c60;
+	--anti-flash-300: #8a8a8f;
+	--anti-flash-400: #bababd;
+	--anti-flash-500: #eaeaeb;
+	--anti-flash-600: #eeeeef;
+	--anti-flash-700: #f3f3f3;
+	--anti-flash-800: #f7f7f7;
+	--anti-flash-900: #fbfbfb;
+	--onyx: #3b3d40;
+	--onyx-100: #0c0c0d;
+	--onyx-200: #181819;
+	--onyx-300: #232426;
+	--onyx-400: #2f3133;
+	--onyx-500: #3b3d40;
+	--onyx-600: #606368;
+	--onyx-700: #868a8f;
+	--onyx-800: #aeb1b5;
+	--onyx-900: #d7d8da;
+	--margin: 20px;
+	--primary: var(--folly);
+	--primary-rgb: 245,47,87;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer components {
+	.picker {
+		--picker-color:var(--primary);
+		@apply transition rounded w-[32px] h-[32px] border-4 cursor-pointer border-[--picker-color] checked:bg-[--picker-color];
+		appearance: none;
+	}
+	.theme-picker {
+		--picker-color:var(--primary);
+		@apply transition rounded w-[32px] h-[32px] cursor-pointer border-4 border-[--picker-color] ring-[--picker-color] checked:ring-2;
+		appearance: none;
+	}
+	.button {
+		@apply transition px-[1.5rem] py-[.475rem] font-medium rounded-md box-border hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)];
+	}
+	.normal-hover {
+		@apply hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.8)];
+	}
+	.big-button {
+		@apply button px-[3.5rem] py-[1rem] text-xl;
+	}
+	.light-hover {
+		@apply hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.1)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)];
+	}
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+	font-family: inherit;
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.app-icon {
+	-webkit-mask-image: url(/favicon.png);
+	mask-image: url(/favicon.png);
+	-webkit-mask-size: 100%;
+	mask-size: 100%;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
 }
