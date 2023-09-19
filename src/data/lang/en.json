@@ -1,0 +1,6 @@
+{
+	"data": {
+		"navbar": ["Home", "Modes", "Scoreboard", "Settings"],
+		"settings":["Primary color :","Theme :","Language :"]
+	}
+}

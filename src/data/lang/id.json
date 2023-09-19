@@ -1,0 +1,6 @@
+{
+	"data": {
+		"navbar": ["Beranda", "Permainan", "Peringkat", "Pengaturan"],
+		"settings":["Warna utama :","Tema :","Bahasa :"]
+	}
+}
