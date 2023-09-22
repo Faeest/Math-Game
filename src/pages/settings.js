@@ -1,19 +1,12 @@
 import Layout from "@/components/layout";
+import { useAppContext } from "@/context/AppContext";
 import colors from "@/data/primary-colors.json";
 import updateColor from "@/utilities/primary";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-export async function getServerSideProps(context) {
-	let lang = {};
-	await import(`@/data/lang/${context.locale}.json`).then((e) => (lang = e.data));
-	return {
-		props: {
-			lang,
-		},
-	};
-}
-export default function Home({ lang }) {
+export default function Home() {
+    const { lang } = useAppContext();
 	const router = useRouter();
 	useEffect(() => {
 		if (localStorage.primary && document.querySelector(`#primary-${localStorage.primary}`)) {
@@ -46,7 +39,7 @@ export default function Home({ lang }) {
 		});
 	}, []);
 	return (
-		<Layout lang={lang}>
+		<Layout>
 			<div className='flex flex-col gap-y-6 items-center p-[--margin]'>
 				<div className='w-full text-center text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[0] ?? "Primary Color :"}</div>
 				<div className='flex w-full justify-center gap-10'>
@@ -70,7 +63,7 @@ export default function Home({ lang }) {
 				<div className='w-full text-center text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[2] ?? "Language :"}</div>
 				<div className='flex w-full justify-center gap-10'>
 					{router.locales.map((e) => (
-						<Link href={"/settings"} locale={e} key={"locale-" + e} className={`text-anti-flash bg-[--primary] dark:bg-[--primary-dark] button`} type='radio'>
+						<Link href={"/settings"} locale={e} key={"locale-" + e} className={`text-anti-flash dark:text-onyx bg-[--primary] dark:bg-[--primary-light] rounded-md button`} type='radio'>
 							{e}
 						</Link>
 					))}
