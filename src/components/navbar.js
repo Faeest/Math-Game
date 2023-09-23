@@ -2,13 +2,13 @@ import { useAppContext } from "@/context/AppContext";
 import Account from "./account";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import signOut from "@/firebase/auth/signout";
 export default function Navbar() {
     const { lang, user } = useAppContext();
     const router = useRouter();
     return (
         <nav className="w-full flex rounded-2xl border-4 bg-static-onyx/5 dark:bg-static-anti-flash/5 border-primary px-10 py-3 justify-between items-center">
-            <div onClick={() => 1}>
+            <div onClick={signOut}>
                 <img src="https://singlecolorimage.com/get/eaeaeb/64x64" width={"32px"} alt="icon" className="app-icon dark:block hidden" />
                 <img src="https://singlecolorimage.com/get/3b3d40/64x64" width={"32px"} alt="icon" className="app-icon dark:hidden" />
             </div>

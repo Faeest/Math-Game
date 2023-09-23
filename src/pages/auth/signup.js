@@ -34,7 +34,7 @@ function SignUp() {
                     <input className='appearance-none placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl w-full py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition' onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
                 <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2" href={'/auth/signin'}>Login</Link>
-                <button className="button rounded-lg text-onyx bg-[--primary] mt-4" type="submit">Register</button>
+                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4" type="submit">Register</button>
             </form>
         </Layout>
     );
