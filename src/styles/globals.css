@@ -28,13 +28,18 @@
     --primary-rgb: 245, 47, 87;
     --toastify-text-color-light: var(--onyx) !important;
     --toastify-text-color-dark: var(--anti-flash) !important;
-	--toastify-color-light: var(--anti-flash) !important;
-  --toastify-color-dark: var(--onyx-400) !important;
+    --toastify-color-light: var(--anti-flash) !important;
+    --toastify-color-dark: var(--onyx-400) !important;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+    .hidden {
+        display: hidden;
+    }
+}
 @layer components {
     .picker {
         --picker-color: var(--primary);
@@ -60,6 +65,17 @@
     }
     .lighter-hover {
         @apply hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.05)] focus:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.05)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.1)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)];
+    }
+    .sidebar {
+        @apply origin-right overflow-hidden w-[200px] fixed right-0 bottom-0 bg-static-anti-flash dark:bg-static-onyx-400 border-4 border-[--primary] rounded-r-xl gap-y-3 flex-col p-[--margin] [&_*]:min-w-full [&_*]:text-center m-[--margin] top-[calc(8px_+_56px_+_var(--margin))];
+    }
+    .sidebar-open {
+        transition: opacity linear 0.075s 0.025s, width linear 0.1s;
+    }
+    .sidebar-hidden {
+        transition: opacity linear 0.1s, width linear 0.075s 0.025s;
+        width:0px !important;
+        @apply opacity-0;
     }
 }
 * {
