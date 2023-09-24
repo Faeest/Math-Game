@@ -7,7 +7,7 @@ export default function Navbar() {
     const { lang, user } = useAppContext();
     const router = useRouter();
     return (
-        <nav className="w-full flex rounded-2xl border-4 bg-static-onyx/5 dark:bg-static-anti-flash/5 border-primary px-10 py-3 justify-between items-center">
+        <nav className="w-full flex rounded-2xl border-4 bg-static-anti-flash dark:bg-static-onyx border-primary px-10 py-3 justify-between items-center">
             <div onClick={signOut}>
                 <img src="https://singlecolorimage.com/get/eaeaeb/64x64" width={"32px"} alt="icon" className="app-icon dark:block hidden" />
                 <img src="https://singlecolorimage.com/get/3b3d40/64x64" width={"32px"} alt="icon" className="app-icon dark:hidden" />

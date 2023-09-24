@@ -4,6 +4,7 @@ import signUp from "@/firebase/auth/signup";
 import { useRouter } from "next/navigation";
 import Layout from "@/components/layout";
 import Link from "next/link";
+import { FaArrowRightFromBracket, FaArrowRightToBracket } from "react-icons/fa6";
 function SignUp() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -33,8 +34,8 @@ function SignUp() {
                     <p className="dark:text-anti-flash pt-4 font-medium pb-1 text-onyx">Password</p>
                     <input className='appearance-none placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl w-full py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition' onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
-                <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2" href={'/auth/signin'}>Login</Link>
-                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4" type="submit">Register</button>
+                <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2 flex items-center gap-x-2" href={'/auth/signin'}><FaArrowRightFromBracket />Login</Link>
+                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4 flex items-center gap-x-2" type="submit"><FaArrowRightToBracket />Register</button>
             </form>
         </Layout>
     );

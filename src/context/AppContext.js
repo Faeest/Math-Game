@@ -11,6 +11,7 @@ export const AppContext = React.createContext({});
 export const useAppContext = () => React.useContext(AppContext);
 
 export const AppContextProvider = ({ children, locale, route }) => {
+    const getLang = async () => await import(`@/data/lang/${locale}.json`).then((e) => (setLang(e.data), setLoading2(false)));
     const router = useRouter();
     const [user, setUser] = React.useState(null);
     const [toastOps, setToastOps] = React.useState([]);
@@ -18,23 +19,29 @@ export const AppContextProvider = ({ children, locale, route }) => {
     const [loading, setLoading] = React.useState(true);
     const [loading2, setLoading2] = React.useState(true);
     const [loading3, setLoading3] = React.useState(true);
-    async function getLang() {
-        await import(`@/data/lang/${locale}.json`).then((e) => (setLang(e.data), setLoading2(false)));
-    }
+    const [onlineStatus, setOnlineStatus] = React.useState(true);
+
     React.useEffect(() => {
-        getLang();
-    }, [locale]);
+        window.addEventListener("offline", () => setOnlineStatus(false));
+        window.addEventListener("online", () => setOnlineStatus(true),console.log(document.readyState));
+
+        return () => {
+            window.removeEventListener("offline", () => setOnlineStatus(false));
+            window.removeEventListener("online", () => setOnlineStatus(true));
+        };
+    }, []);
     React.useEffect(() => {
-        console.log("fired");
         if (user && route.startsWith("/auth")) {
             setToastOps(["You've been logged in!", { type: "success", theme: localStorage.theme }]);
             router.push("/");
         } else {
-            console.log(toastOps);
             if (toastOps.length != 0) toast(toastOps[0], toastOps[1]), setToastOps([]);
             setLoading3(false);
         }
     }, [route, user]);
+    React.useEffect(() => {
+        getLang();
+    }, [locale]);
     React.useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -47,5 +54,5 @@ export const AppContextProvider = ({ children, locale, route }) => {
         return () => unsubscribe();
     }, []);
 
-    return <AppContext.Provider value={{ user, lang }}>{loading || loading2 || loading3 ? <div>Loading...</div> : children}</AppContext.Provider>;
+    return <AppContext.Provider value={{ user, lang, onlineStatus }}>{loading || loading2 || loading3 ? <div>Loading...</div> : children}</AppContext.Provider>;
 };

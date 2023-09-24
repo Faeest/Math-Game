@@ -6,6 +6,7 @@ import Layout from "@/components/layout";
 import googleSignIn from "@/firebase/auth/google";
 import githubSignIn from "@/firebase/auth/github";
 import Link from "next/link";
+import {FaArrowRightFromBracket, FaArrowRightToBracket, FaGithub, FaGoogle} from "react-icons/fa6"
 function Signin() {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
@@ -43,14 +44,14 @@ function Signin() {
                     <p className="dark:text-anti-flash pt-4 font-medium pb-1 text-onyx">Password</p>
                     <input className='appearance-none placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl w-full py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition' onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
-                <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2" href={'/auth/signup'}>Register</Link>
-                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2" type="submit">Login</button>
+                <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2 flex items-center gap-x-2" href={'/auth/signup'}><FaArrowRightToBracket />Register</Link>
+                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit"><FaArrowRightFromBracket />Login</button>
             </form>
-            <button className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto" id="google" onClick={handleProvider}>
-                Continue with Google
+            <button className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2" id="google" onClick={handleProvider}>
+                <FaGoogle />Continue with Google
             </button>
-            <button className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto" id="github" onClick={handleProvider}>
-                Continue with Github
+            <button className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2" id="github" onClick={handleProvider}>
+                <FaGithub />Continue with Github
             </button>
         </Layout>
     );
