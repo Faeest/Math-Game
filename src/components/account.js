@@ -1,6 +1,7 @@
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
 import Link from "next/link";
+import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { MdSignalWifiOff } from "react-icons/md";
 import { toast } from "react-toastify";
 export default function Account({ className }) {
@@ -18,8 +19,8 @@ export default function Account({ className }) {
                 />
             </Link>
         ) : (
-            <Link href={"/auth/signin"} className={className + " bg-[--primary] text-anti-flash font-semibold button"}>
-                Login
+            <Link href={"/auth/signin"} className={className + " bg-[--primary] nav-link"}>
+                <span className="max-lg:hidden">Login</span><FaArrowRightFromBracket className="max-lg:text-xl lg:hidden" />
             </Link>
         )
     ) : (

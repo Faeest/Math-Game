@@ -67,15 +67,22 @@
         @apply hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.05)] focus:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.05)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.1)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)];
     }
     .sidebar {
-        @apply origin-right overflow-hidden w-[200px] fixed right-0 bottom-0 bg-static-anti-flash dark:bg-static-onyx-400 border-4 border-[--primary] rounded-r-xl gap-y-3 flex-col p-[--margin] [&_*]:min-w-full [&_*]:text-center m-[--margin] top-[calc(8px_+_56px_+_var(--margin))];
+        @apply flex-col gap-y-4 [&_*]:w-full [&_*]:text-center;
     }
-    .sidebar-open {
-        transition: opacity linear 0.075s 0.025s, width linear 0.1s;
+    .sidenav {
+        @apply w-0 gap-y-8 py-8 px-0 flex-col justify-start transition-[width,padding] overflow-hidden;
     }
-    .sidebar-hidden {
-        transition: opacity linear 0.1s, width linear 0.075s 0.025s;
-        width:0px !important;
-        @apply opacity-0;
+    .selected-nav {
+        @apply !bg-[--primary] dark:!bg-[--primary-light] hover:!shadow-none !text-anti-flash dark:!text-onyx;
+    }
+    .nav-link {
+        @apply light-hover lg:px-5 dark:normal-hover rounded-xl button text-onyx dark:text-anti-flash max-lg:p-3 max-lg:aspect-square max-lg:flex max-lg:items-center;
+    }
+    .sidenav-show-sibling {
+        @apply !gap-0;
+    }
+    .sidenav-show {
+        @apply max-lg:!w-[100px] !px-4 !border-4;
     }
 }
 * {
@@ -88,4 +95,11 @@
     mask-size: 100%;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
+}
+
+.sidenav-show-sibling {
+    @apply !gap-0;
+}
+.sidenav-show {
+    @apply max-lg:!w-[100px] !px-4 !border-4;
 }

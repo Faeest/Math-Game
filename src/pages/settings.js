@@ -41,8 +41,8 @@ export default function Home() {
 	return (
 		<Layout>
 			<div className='flex flex-col gap-y-6 items-center p-[--margin]'>
-				<div className='w-full text-center text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[0] ?? "Primary Color :"}</div>
-				<div className='flex w-full justify-center gap-10'>
+				<div className='w-full text-center text-xl sm:text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[0] ?? "Primary Color :"}</div>
+				<div className='flex w-full flex-wrap justify-center gap-10'>
 					{Object.keys(colors.data).map((e) => (
 						<input
 							value={e}
@@ -55,12 +55,12 @@ export default function Home() {
 						/>
 					))}
 				</div>
-				<div className='w-full text-center text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[1] ?? "Theme :"}</div>
+				<div className='w-full text-center text-xl sm:text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[1] ?? "Theme :"}</div>
 				<div className='flex w-full justify-center gap-10'>
 					<input value={"light"} name='theme-color' className={`theme-picker bg-anti-flash`} type='radio' />
 					<input value={"dark"} name='theme-color' className={`theme-picker bg-onyx`} type='radio' />
 				</div>
-				<div className='w-full text-center text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[2] ?? "Language :"}</div>
+				<div className='w-full text-center text-xl sm:text-2xl font-medium pt-8 text-onyx dark:text-anti-flash'>{lang?.settings?.[2] ?? "Language :"}</div>
 				<div className='flex w-full justify-center gap-10'>
 					{router.locales.map((e) => (
 						<Link href={"/settings"} locale={e} key={"locale-" + e} className={`text-anti-flash dark:text-onyx bg-[--primary] dark:bg-[--primary-light] rounded-md button`} type='radio'>
