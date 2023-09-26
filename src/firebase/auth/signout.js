@@ -9,7 +9,6 @@ export default async function signOut() {
         error = null;
     try {
         result = await out(auth);
-        toast("You've been logged out!", { type: "info", theme: localStorage.theme });
     } catch (e) {
         error = e;
     }

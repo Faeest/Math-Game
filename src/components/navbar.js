@@ -7,16 +7,17 @@ import Image from "next/image";
 import { FaGamepad, FaGear } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
+import { toast } from "react-toastify";
 export default function Navbar() {
     const { lang, user } = useAppContext();
     const router = useRouter();
     return (
         <nav className="w-full flex rounded-2xl border-0 bg-static-anti-flash max-lg:sidenav sm:sidenav-show dark:bg-static-onyx border-primary px-10 py-3 justify-between items-center">
-            <div onClick={signOut} className="max-sm:hidden">
+            <div onClick={() => signOut().then(()=> toast(lang?.notification?.logoutSuccess ?? "You've been logged out!", { type: "info", theme: localStorage.theme }))} className="max-sm:hidden">
                 <Image src="https://singlecolorimage.com/get/eaeaeb/64x64" width={32} height={32} alt="icon" className="app-icon dark:block hidden" />
                 <Image src="https://singlecolorimage.com/get/3b3d40/64x64" width={32} height={32} alt="icon" className="app-icon dark:hidden" />
             </div>
-            <div className={"flex gap-x-3 md:gap-x-6 items-center max-lg:sidebar"}>
+            <div className={"flex gap-x-3 md:gap-x-6 items-center max-lg:sidebar max-lg:w-full"}>
                 <Link tabIndex={1} href={"/"} className={"nav-link " + (router.route == "/" ? "selected-nav" : "")}>
                     <span className="max-lg:hidden">{lang?.navbar?.[0] ?? "Home"}</span> <FaHome className="lg:hidden max-lg:text-xl" />
                 </Link>

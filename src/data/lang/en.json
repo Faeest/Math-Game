@@ -1,6 +1,11 @@
 {
-	"data": {
-		"navbar": ["Home", "Modes", "Scoreboard", "Settings"],
-		"settings":["Primary color :","Theme :","Language :"]
-	}
+    "data": {
+        "navbar": ["Home", "Games", "Scoreboard", "Settings"],
+        "settings": ["Primary color :", "Theme :", "Language :"],
+        "auth": ["Login", "Register", "Email", "Password", "Continue With Google", "Continue With Github"],
+        "notification" : {
+			"loginSuccess" : "You've been logged in!",
+			"logoutSuccess" : "You've been logged out!"
+		}
+    }
 }

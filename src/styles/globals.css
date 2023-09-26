@@ -70,7 +70,7 @@
         @apply flex-col gap-y-4 [&_*]:w-full [&_*]:text-center;
     }
     .sidenav {
-        @apply w-0 gap-y-8 py-8 px-0 flex-col justify-start transition-[width,padding] overflow-hidden;
+        @apply w-0 gap-y-8 shrink py-8 px-0 flex-col justify-start transition-[width,padding] overflow-hidden;
     }
     .selected-nav {
         @apply !bg-[--primary] dark:!bg-[--primary-light] hover:!shadow-none !text-anti-flash dark:!text-onyx;
@@ -82,7 +82,7 @@
         @apply !gap-0;
     }
     .sidenav-show {
-        @apply max-lg:!w-[100px] !px-4 !border-4;
+        @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
     }
 }
 * {
@@ -101,5 +101,5 @@
     @apply !gap-0;
 }
 .sidenav-show {
-    @apply max-lg:!w-[100px] !px-4 !border-4;
+    @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
 }

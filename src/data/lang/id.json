@@ -1,6 +1,11 @@
 {
 	"data": {
 		"navbar": ["Beranda", "Permainan", "Peringkat", "Pengaturan"],
-		"settings":["Warna utama :","Tema :","Bahasa :"]
+		"settings":["Warna utama :","Tema :","Bahasa :"],
+        "auth": ["Masuk", "Daftar", "Email", "Password", "Lanjut dengan Google", "Lanjut dengan Github"],
+		"notification" : {
+			"loginSuccess" : "Kamu berhasil masuk!",
+			"logoutSuccess" : "Kamu berhasil keluar!"
+		}
 	}
 }
