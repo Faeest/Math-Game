@@ -19,11 +19,9 @@ function SignUp() {
         const { result, error } = await signUp(email, password);
 
         if (error) {
+            alert(result, error);
             return toast(error.code.replaceAll("-", " ").replaceAll("auth/", ""), { type: "error", theme: localStorage.theme });
         }
-
-        // else successful  /[^a-z0-9_\.]/g
-        return router.push("/");
     };
     return (
         <Layout>

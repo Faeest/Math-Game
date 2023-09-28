@@ -37,7 +37,7 @@
 @tailwind utilities;
 @layer base {
     .hidden {
-        display: hidden;
+        display: none;
     }
 }
 @layer components {
@@ -48,7 +48,7 @@
     }
     .theme-picker {
         --picker-color: var(--primary);
-        @apply transition rounded w-[32px] h-[32px] cursor-pointer border-4 border-[--picker-color] ring-[--picker-color] checked:ring-2;
+        @apply transition rounded w-[32px] h-[32px] cursor-pointer border-4 border-[--picker-color] ring-[--picker-color] checked:ring-2 checked:ring-[--primary-dark] checked:border-[--primary-dark] dark:checked:ring-[--primary-light] dark:checked:border-[--primary-light];
         appearance: none;
     }
     .button {
@@ -102,4 +102,7 @@
 }
 .sidenav-show {
     @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
+}
+input[type='radio'], a {
+    @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:!ring-onyx focus-visible:dark:!ring-anti-flash;
 }

@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import signIn from "@/firebase/auth/signin";
-import { useRouter } from "next/navigation";
 import Layout from "@/components/layout";
 import googleSignIn from "@/firebase/auth/google";
 import githubSignIn from "@/firebase/auth/github";
@@ -13,27 +12,18 @@ function Signin() {
     const { lang } = useAppContext();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const router = useRouter();
     const handleProvider = async (event) => {
         let providers = [githubSignIn, googleSignIn];
         let aliases = ["github", "google"];
         let indexes = aliases.findIndex((e) => e == event.target.id);
         if (indexes < 0) return false; // inccorect provider argument
         let { result, error } = await providers[indexes]?.();
-        if (error) return false; //sign in failed
-        return router.push("/");
+        if (error) return toast(error.code.replaceAll("-", " ").replaceAll("auth/", ""), { type: "error", theme: localStorage.theme }); //sign in failed
     };
     const handleForm = async (event) => {
         event.preventDefault();
-
         const { result, error } = await signIn(email, password);
-
-        if (error) {
-            return toast(error.code.replaceAll("-", " ").replaceAll("auth/", ""), { type: "error", theme: localStorage.theme });
-        }
-
-        // else successful
-        return router.push("/");
+        if (error) return toast(error.code.replaceAll("-", " ").replaceAll("auth/", ""), { type: "error", theme: localStorage.theme }); //sign in failed
     };
     return (
         <Layout>
