@@ -11,13 +11,12 @@ export default function Account({ className }) {
     return onlineStatus ? (
         user ? (
             <Link href={"/profile"} className={className + " flex cursor-pointer !rounded-full"}>
-                <Image
-                    priority
-                    className={"hover:ring-4 rounded-full active:ring-0 ring-[rgba(var(--primary-rgb),.3)] transition" + (router.route.includes("/profile") ? " ring-4" : "")}
-                    src={user?.photoURL ?? "/user.png"}
-                    alt="user profile"
-                    width={40}
-                    height={40}
+                <div
+                    style={{ backgroundImage: `url(${user?.photoURL ?? "/user.png"})` }}
+                    className={
+                        "hover:ring-4 bg-cover bg-no-repeat bg-center rounded-full w-[40px] aspect-square active:ring-0 ring-[rgba(var(--primary-rgb),.3)] transition" +
+                        (router.route.includes("/profile") ? " ring-4" : "")
+                    }
                 />
             </Link>
         ) : (
