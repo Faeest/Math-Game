@@ -8,12 +8,20 @@ import { FaGamepad, FaGear } from "react-icons/fa6";
 import { FaHome } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
 import { toast } from "react-toastify";
+import modeToggler from "@/utilities/modeToggler";
 export default function Navbar() {
+    const devAction = () => {
+        modeToggler()
+        // signOut().then(() => toast(lang?.notification?.logoutSuccess ?? "You've been logged out!", { type: "info", theme: localStorage.theme }));
+    };
     const { lang, user } = useAppContext();
     const router = useRouter();
     return (
         <nav className="w-full flex rounded-2xl border-0 bg-static-anti-flash max-lg:sidenav sm:sidenav-show dark:bg-static-onyx border-primary px-10 py-3 justify-between items-center">
-            <div onClick={() => signOut().then(()=> toast(lang?.notification?.logoutSuccess ?? "You've been logged out!", { type: "info", theme: localStorage.theme }))} className="max-sm:hidden select-none">
+            <div
+                onClick={devAction}
+                className="max-sm:hidden select-none"
+            >
                 <Image src="https://singlecolorimage.com/get/eaeaeb/64x64" width={32} height={32} alt="icon" className="app-icon dark:block hidden" />
                 <Image src="https://singlecolorimage.com/get/3b3d40/64x64" width={32} height={32} alt="icon" className="app-icon dark:hidden" />
             </div>

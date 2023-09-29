@@ -1,24 +1,24 @@
 :root {
-    --anti-flash: #eaeaeb;
-    --anti-flash-100: #2e2e30;
-    --anti-flash-200: #5c5c60;
-    --anti-flash-300: #8a8a8f;
-    --anti-flash-400: #bababd;
-    --anti-flash-500: #eaeaeb;
-    --anti-flash-600: #eeeeef;
-    --anti-flash-700: #f3f3f3;
-    --anti-flash-800: #f7f7f7;
-    --anti-flash-900: #fbfbfb;
-    --onyx: #3b3d40;
-    --onyx-100: #0c0c0d;
-    --onyx-200: #181819;
-    --onyx-300: #232426;
-    --onyx-400: #2f3133;
-    --onyx-500: #3b3d40;
-    --onyx-600: #606368;
-    --onyx-700: #868a8f;
-    --onyx-800: #aeb1b5;
-    --onyx-900: #d7d8da;
+    --anti-flash: rgb(234, 234, 235);
+    --anti-flash-100: rgb(46, 46, 48);
+    --anti-flash-200: rgb(92, 92, 96);
+    --anti-flash-300: rgb(138, 138, 143);
+    --anti-flash-400: rgb(186, 186, 189);
+    --anti-flash-500: rgb(234, 234, 235);
+    --anti-flash-600: rgb(238, 238, 239);
+    --anti-flash-700: rgb(243, 243, 243);
+    --anti-flash-800: rgb(247, 247, 247);
+    --anti-flash-900: rgb(251, 251, 251);
+    --onyx: rgb(59, 61, 64);
+    --onyx-100: rgb(12, 12, 13);
+    --onyx-200: rgb(24, 24, 25);
+    --onyx-300: rgb(35, 36, 38);
+    --onyx-400: rgb(47, 49, 51);
+    --onyx-500: rgb(59, 61, 64);
+    --onyx-600: rgb(96, 99, 104);
+    --onyx-700: rgb(134, 138, 143);
+    --onyx-800: rgb(174, 177, 181);
+    --onyx-900: rgb(215, 216, 218);
     --margin: 20px;
     --primary-darker: #7b182c;
     --primary-dark: #b82341;
@@ -84,6 +84,26 @@
     .sidenav-show {
         @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
     }
+    .games-radio {
+        --color: var(--primary);
+        @apply ring-4 ring-[--color] brightness-125 bg-transparent text-[--color] transition p-2 rounded-lg font-semibold;
+    }
+    .games-radio-checked {
+        @apply bg-[--color] text-anti-flash brightness-100;
+    }
+    .countdown {
+        --duration: 3s;
+        background-size: 300% 100%;
+        @apply animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
+    }
+}
+@keyframes countdown-to {
+    0% {
+        background-position: -20% 0%;
+    }
+    100% {
+        background-position: 120% 0%;
+    }
 }
 * {
     font-family: inherit;
@@ -103,6 +123,7 @@
 .sidenav-show {
     @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
 }
-input[type='radio'], a {
+input[type="radio"],
+a {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:!ring-onyx focus-visible:dark:!ring-anti-flash;
 }

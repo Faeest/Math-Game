@@ -19,7 +19,7 @@ export default function Layout({ children }) {
                 }}
                 className="sm:hidden right-[--margin] top-[--margin] absolute p-4 border-4 border-[--primary] rounded-tl-none rounded-tr-xl rounded-bl-xl rounded-br-none button cursor-pointer"
             >
-                <BsThreeDots className="aspect-square" />
+                <BsThreeDots className="aspect-square dark:text-[--primary-light] text-[--primary]" />
             </div>
             <Navbar />
             <div className="flex flex-col w-full grow rounded-xl border-4 border-primary">{children}</div>
