@@ -1,29 +1,56 @@
 import Layout from "@/components/layout";
 import { useAppContext } from "@/context/AppContext";
 import { Game } from "@/core/game";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 export default function Games() {
     const { lang } = useAppContext();
     const [gameInstance, setGameInstance] = useState(null);
-    let time, timeForward, answerAction, score;
+    const [bank, setBank] = useState([]);
+    const input = useRef();
+    const answering = (event) => {
+        if (event.code != "Enter" || gameInstance.answering) return;
+        if (parseFloat(gameInstance.answer) == input.current.value) {
+            console.log("good");
+        }
+    };
     const startGame = () => {
         setGameInstance(Game());
     };
+    const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
     useEffect(() => {
-        if (gameInstance && gameInstance.countDown && !gameInstance.countingDown) {
-            setGameInstance({ ...gameInstance, countingDown: true });
-            setTimeout(() => {
-                setGameInstance({ ...gameInstance, countDown: false, countingDown: false });
-            }, gameInstance.countDownSeconds * 1000);
+        if (gameInstance) {
+            if (gameInstance.countDown && !gameInstance.countingDown) {
+                updateGameInstance({ countingDown: true });
+                setTimeout(() => updateGameInstance({ countDown: false, countingDown: false, answering: true }), gameInstance.countDownSeconds * 1000);
+            }
+            if (gameInstance.answering) {
+                updateGameInstance({ answering: false, ...gameInstance.questionMaker() });
+            }
         }
     }, [gameInstance]);
     return (
         <Layout>
             {gameInstance ? (
                 gameInstance.countDown ? (
-                    <div className={"w-full grow countdown p-5 flex justify-center items-center text-2xl md:text-4xl text-[--primary-dark] dark:text-[--primary-light] font-bold"}>Starting in {gameInstance.countDownSeconds} seconds</div>
+                    <div
+                        className={
+                            "w-full grow countdown p-5 flex justify-center items-center text-2xl md:text-4xl text-[--primary-dark] dark:text-[--primary-light] font-bold"
+                        }
+                    >
+                        Starting in {gameInstance.countDownSeconds} seconds
+                    </div>
                 ) : (
-                    <>LOL</>
+                    <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
+                        <div className="w-full mt-10 text-center text-3xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]">
+                            {!gameInstance.answering ? gameInstance.question : ""}
+                        </div>
+                        <input
+                            ref={input}
+                            onKeyUp={answering}
+                            className="appearance-none w-[200px] text-center md:mt-20 placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
+                            type="text"
+                        />
+                    </div>
                 )
             ) : (
                 <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">

@@ -93,7 +93,7 @@
     }
     .countdown {
         --duration: 3s;
-        background-size: 300% 100%;
+        background-size: 400% 100%;
         @apply animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
     }
 }
@@ -102,7 +102,7 @@
         background-position: -20% 0%;
     }
     100% {
-        background-position: 120% 0%;
+        background-position: 120% 100%;
     }
 }
 * {

@@ -1,7 +1,8 @@
 export function Game(diffculty) {
     let result = {
-        question: null,
         answer: null,
+        question: null,
+        answering: false,
         level: 0,
         gameOver: false,
         diffculty: diffculty,
@@ -9,8 +10,9 @@ export function Game(diffculty) {
         countingDown: false,
         countDownSeconds: 3,
         questionMaker() {
-            result.question = "1 + 1";
-            result.answer = 2;
+            let question = "1 + 1";
+            let answer = 2;
+            return { question, answer };
         },
     };
     return result;
