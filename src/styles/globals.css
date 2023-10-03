@@ -94,7 +94,15 @@
     .countdown {
         --duration: 3s;
         background-size: 400% 100%;
-        @apply animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
+        @apply animate-[countdown-to-2_var(--duration)_infinite] md:animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] md:bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
+    }
+}
+@keyframes countdown-to-2 {
+    10% {
+        background:rgba(var(--primary-rgb),0)
+    }
+    50% {
+        background:rgba(var(--primary-rgb),0.2)
     }
 }
 @keyframes countdown-to {
@@ -126,4 +134,14 @@
 input[type="radio"],
 a {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:!ring-onyx focus-visible:dark:!ring-anti-flash;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+input[type=number]{
+    -moz-appearance: textfield;
 }

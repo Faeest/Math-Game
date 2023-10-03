@@ -8,7 +8,7 @@ export default function Games() {
     const [bank, setBank] = useState([]);
     const input = useRef();
     const answering = (event) => {
-        if (event.code != "Enter" || gameInstance.answering) return;
+        if (event.keyCode != 13 || gameInstance.answering) return;
         if (parseFloat(gameInstance.answer) == input.current.value) {
             console.log("good");
         }
@@ -16,8 +16,8 @@ export default function Games() {
     const startGame = () => {
         setGameInstance(Game());
     };
-    const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
     useEffect(() => {
+        const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
         if (gameInstance) {
             if (gameInstance.countDown && !gameInstance.countingDown) {
                 updateGameInstance({ countingDown: true });
@@ -41,14 +41,14 @@ export default function Games() {
                     </div>
                 ) : (
                     <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
-                        <div className="w-full mt-10 text-center text-3xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]">
+                        <div className="w-full mt-10 text-center text-4xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]">
                             {!gameInstance.answering ? gameInstance.question : ""}
                         </div>
                         <input
                             ref={input}
                             onKeyUp={answering}
                             className="appearance-none w-[200px] text-center md:mt-20 placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
-                            type="text"
+                            type="text" inputMode="numeric"
                         />
                     </div>
                 )

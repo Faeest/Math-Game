@@ -48,9 +48,9 @@ export default function Profile() {
                 <input
                     name="photo"
                     ref={fileInput}
-                    onChange={(event) => {
-                        if (fileInput?.current?.files?.[0]?.size > 2097152) {
-                            toast("Your file is too big! (2mb max)", { type: "error", theme: localStorage.theme });
+                    onChange={(event) => {console.log(fileInput?.current?.files);
+                        if (fileInput?.current?.files?.[0]?.size > 2097152 || !fileInput?.current?.files?.[0]?.type?.startsWith("image")) {
+                            toast("Your file invalid!", { type: "error", theme: localStorage.theme });
                             fileInput.current.value = "";
                             setPhotoURL(user?.photoURL ?? "/user.png");
                         } else if (fileInput?.current?.files?.[0]) {
