@@ -1,16 +1,39 @@
 import Layout from "@/components/layout";
 import { useAppContext } from "@/context/AppContext";
 import { Game } from "@/core/game";
-import { useEffect, useReducer, useRef, useState } from "react";
+import gsap from "gsap";
+import _ from "lodash";
+import { useEffect, useRef, useState } from "react";
 export default function Games() {
     const { lang } = useAppContext();
     const [gameInstance, setGameInstance] = useState(null);
     const [bank, setBank] = useState([]);
     const input = useRef();
+    const questionElement = useRef();
+    const wrongAnimation = () => {
+        if (!questionElement.current) return;
+        gsap.fromTo(
+            questionElement.current,
+            0.01,
+            { x: () => _.random(-5, -20), rotate: () => _.random(-1, -5) },
+            { x: () => _.random(5, 20), rotate: () => _.random(1, 5), clearProps: "x", repeat: 20 }
+        );
+    };
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
         if (parseFloat(gameInstance.answer) == input.current.value) {
             console.log("good");
+            setBank([
+                ...bank,
+                {
+                    question: gameInstance.question,
+                    answer: gameInstance.answer,
+                    userAnswer: input.current.value,
+                },
+            ]);
+            setGameInstance({ ...gameInstance, answering: true });
+        } else {
+            wrongAnimation();
         }
     };
     const startGame = () => {
@@ -21,10 +44,22 @@ export default function Games() {
         if (gameInstance) {
             if (gameInstance.countDown && !gameInstance.countingDown) {
                 updateGameInstance({ countingDown: true });
-                setTimeout(() => updateGameInstance({ countDown: false, countingDown: false, answering: true }), gameInstance.countDownSeconds * 1000);
+                setTimeout(
+                    () =>
+                        updateGameInstance({
+                            countDown: false,
+                            countingDown: false,
+                            answering: true,
+                        }),
+                    gameInstance.countDownSeconds * 1000
+                );
             }
             if (gameInstance.answering) {
-                updateGameInstance({ answering: false, ...gameInstance.questionMaker() });
+                updateGameInstance({
+                    answering: false,
+                    ...gameInstance.questionMaker(),
+                });
+                console.log("new question");
             }
         }
     }, [gameInstance]);
@@ -41,14 +76,18 @@ export default function Games() {
                     </div>
                 ) : (
                     <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
-                        <div className="w-full mt-10 text-center text-4xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]">
-                            {!gameInstance.answering ? gameInstance.question : ""}
+                        <div
+                            ref={questionElement}
+                            className="w-full mt-10 text-center text-4xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]"
+                        >
+                            {!gameInstance.answering || gameInstance.question ? gameInstance.question : ""}
                         </div>
                         <input
                             ref={input}
                             onKeyUp={answering}
                             className="appearance-none w-[200px] text-center md:mt-20 placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
-                            type="text" inputMode="numeric"
+                            type="text"
+                            inputMode="numeric"
                         />
                     </div>
                 )
