@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/config";
 import { useRouter } from "next/router";
@@ -26,6 +26,7 @@ export const AppContextProvider = ({ children, locale, route }) => {
         getLang();
     }, [locale]);
     React.useEffect(() => {
+        setOnlineStatus(navigator.onLine)
         // getDocs(collection(firestore, "/token")).then((e) => e.docs.map(x=>console.log(x.data())))
         window.addEventListener("offline", () => setOnlineStatus(false));
         window.addEventListener("online", () => setOnlineStatus(true));
@@ -49,6 +50,7 @@ export const AppContextProvider = ({ children, locale, route }) => {
             if (toastOps.length != 0) toast(toastOps[0], toastOps[1]), setToastOps([]);
             setLoading3(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [route, user, lang]);
     React.useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {

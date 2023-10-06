@@ -22,7 +22,6 @@ export default function Games() {
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
         if (parseFloat(gameInstance.answer) == input.current.value) {
-            console.log("good");
             setBank([
                 ...bank,
                 {
@@ -59,7 +58,6 @@ export default function Games() {
                     answering: false,
                     ...gameInstance.questionMaker(),
                 });
-                console.log("new question");
             }
         }
     }, [gameInstance]);
@@ -92,26 +90,45 @@ export default function Games() {
                     </div>
                 )
             ) : (
-                <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
-                    <div className="w-full text-center text-xl sm:text-2xl font-medium pt-8 text-onyx dark:text-anti-flash">
+                <div className="flex flex-col w-full gap-y-6 max-h-full items-center p-[--margin]">
+                    <div className="w-full text-center text-xl sm:text-4xl font-semibold pt-8 text-onyx dark:text-anti-flash">
                         {lang?.games?.[0] ?? "Choose Mode :"}
                     </div>
-                    <div className="flex w-full flex-wrap justify-center gap-10">
-                        <input id="classic" name="mode" className={`peer hidden`} type="radio" />
-                        <label className="peer-[#classic]:peer-checked:games-radio-checked games-radio" htmlFor="classic">
-                            Classic
-                        </label>
-                        <input name="mode" className={`picker`} type="radio" />
+                    <div className="flex flex-wrap justify-center pt-8">
+                        <div className="flex max-sm:[&>*]:-mx-[1px] -mb-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center">
+                            <input id="classic" name="mode" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#classic]:peer-checked:games-radio-checked games-radio-1" htmlFor="classic">
+                                Classic
+                            </label>
+                            <input defaultChecked id="survival" name="mode" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#survival]:peer-checked:games-radio-checked games-radio-1" htmlFor="survival">
+                                Survival
+                            </label>
+                            <input id="inverted" name="mode" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#inverted]:peer-checked:games-radio-checked games-radio-1" htmlFor="inverted">
+                                Inverted
+                            </label>
+                        </div>
+                        {/*  */}
+                        <div className="devider w-full grow border border-[--primary]"></div>
+                        {/*  */}
+                        <div className="flex max-sm:[&>*]:-mx-[1px] -mt-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center">
+                            <input id="easy" name="difficulty" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#easy]:peer-checked:games-radio-checked games-radio-2" htmlFor="easy">
+                                Easy
+                            </label>
+                            <input defaultChecked id="normal" name="difficulty" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#normal]:peer-checked:games-radio-checked games-radio-2" htmlFor="normal">
+                                Normal
+                            </label>
+                            <input id="hard" name="difficulty" className={`peer hidden`} type="radio" />
+                            <label className="peer-[#hard]:peer-checked:games-radio-checked games-radio-2" htmlFor="hard">
+                                hard
+                            </label>
+                        </div>
                     </div>
-                    <div className="w-full text-center text-xl sm:text-2xl font-medium pt-8 text-onyx dark:text-anti-flash">
-                        {lang?.games?.[1] ?? "Choose Difficulty :"}
-                    </div>
-                    <div className="flex w-full flex-wrap justify-center gap-10">
-                        <input name="diffculty" className={`picker`} type="radio" />
-                        <input name="diffculty" className={`picker`} type="radio" />
-                        <input name="diffculty" className={`picker`} type="radio" />
-                    </div>
-                    <div onClick={startGame} className="button bg-[--primary] text-anti-flash mt-10 cursor-pointer">
+                    {/* <div className="w-full border-2 border-[rgba(var(--primary-rgb))] mt-10"></div> */}
+                    <div onClick={startGame} className="button bg-[--primary] text-anti-flash cursor-pointer mt-10">
                         Start!
                     </div>
                 </div>

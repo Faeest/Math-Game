@@ -52,7 +52,7 @@
         appearance: none;
     }
     .button {
-        @apply transition focus:outline-none px-[1.5rem] py-[.475rem] font-medium rounded box-border hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] focus:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)];
+        @apply transition focus:outline-none select-none px-[1.5rem] py-[.475rem] font-medium rounded box-border hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] focus:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)];
     }
     .normal-hover {
         @apply hover:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] focus:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.2)] active:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.4)] disabled:shadow-[0_0_0_100vmax_inset_rgb(0,0,0,.8)];
@@ -84,12 +84,19 @@
     .sidenav-show {
         @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
     }
-    .games-radio {
+    .games-radio-1,
+    .games-radio-2 {
         --color: var(--primary);
-        @apply ring-4 ring-[--color] brightness-125 bg-transparent text-[--color] transition p-2 rounded-lg font-semibold;
+        @apply border-2 w-1/4 min-w-fit text-center border-[--color] hover:brightness-75 dark:hover:brightness-100 select-none brightness-90 dark:brightness-125 bg-transparent text-[--color] transition px-[1.25rem] py-[.475rem] cursor-pointer rounded-sm rounded-b-none font-semibold;
+    }
+    .games-radio-1 {
+        @apply border-b-0;
+    }
+    .games-radio-2 {
+        @apply border-t-0;
     }
     .games-radio-checked {
-        @apply bg-[--color] text-anti-flash brightness-100;
+        @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100;
     }
     .countdown {
         --duration: 3s;
@@ -99,10 +106,10 @@
 }
 @keyframes countdown-to-2 {
     10% {
-        background:rgba(var(--primary-rgb),0)
+        background: rgba(var(--primary-rgb), 0);
     }
     50% {
-        background:rgba(var(--primary-rgb),0.2)
+        background: rgba(var(--primary-rgb), 0.2);
     }
 }
 @keyframes countdown-to {
@@ -135,13 +142,13 @@ input[type="radio"],
 a {
     @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:!ring-onyx focus-visible:dark:!ring-anti-flash;
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
-input[type=number]{
+input[type="number"] {
     -moz-appearance: textfield;
 }

@@ -48,7 +48,7 @@ export default function Profile() {
                 <input
                     name="photo"
                     ref={fileInput}
-                    onChange={(event) => {console.log(fileInput?.current?.files);
+                    onChange={(event) => {
                         if (fileInput?.current?.files?.[0]?.size > 2097152 || !fileInput?.current?.files?.[0]?.type?.startsWith("image")) {
                             toast("Your file invalid!", { type: "error", theme: localStorage.theme });
                             fileInput.current.value = "";
