@@ -4,12 +4,21 @@ import { Game } from "@/core/game";
 import gsap from "gsap";
 import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
+import { BsFlag, BsFlagFill, BsTriangleFill } from "react-icons/bs";
+import { FaArrowRight, FaChevronRight, FaCircleChevronRight, FaFlag } from "react-icons/fa6";
 export default function Games() {
     const { lang } = useAppContext();
     const [gameInstance, setGameInstance] = useState(null);
     const [bank, setBank] = useState([]);
     const input = useRef();
     const questionElement = useRef();
+    const tl = gsap.timeline();
+    const animate = (answer = false) => {
+        tl.clear()
+            .set("#app-container", { backgroundColor: answer ? "2a9d8f00" : "#d6282800" })
+            .to("#app-container", { duration: 0.3, backgroundColor: answer ? "#2a9d8f55" : "#d6282855" })
+            .to("#app-container", { duration: 0.3, backgroundColor: answer ? "#2a9d8f00" : "#d6282800" });
+    };
     const wrongAnimation = () => {
         if (!questionElement.current) return;
         gsap.fromTo(
@@ -22,6 +31,7 @@ export default function Games() {
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
         if (parseFloat(gameInstance.answer) == input.current.value) {
+            animate(true);
             setBank([
                 ...bank,
                 {
@@ -32,6 +42,7 @@ export default function Games() {
             ]);
             setGameInstance({ ...gameInstance, answering: true });
         } else {
+            animate();
             wrongAnimation();
         }
     };
@@ -73,20 +84,28 @@ export default function Games() {
                         Starting in {gameInstance.countDownSeconds} seconds
                     </div>
                 ) : (
-                    <div className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
+                    <div id="game-container" className="flex flex-col w-full max-h-full gap-y-6 items-center p-[--margin]">
                         <div
                             ref={questionElement}
                             className="w-full mt-10 text-center text-4xl md:text-6xl text-[--primary-dark] font-semibold dark:text-[--primary-light]"
                         >
                             {!gameInstance.answering || gameInstance.question ? gameInstance.question : ""}
                         </div>
-                        <input
-                            ref={input}
-                            onKeyUp={answering}
-                            className="appearance-none w-[200px] text-center md:mt-20 placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-xl py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
-                            type="text"
-                            inputMode="numeric"
-                        />
+                        <div className="flex h-fit md:mt-20 items-stretch">
+                            <div className="button rounded-r-none px-4 pr-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square">
+                                <FaFlag className="text-[#d62828] dark:text-anti-flash" />
+                            </div>
+                            <input
+                                ref={input}
+                                onKeyUp={answering}
+                                className="appearance-none font-semibold z-50 w-[200px] text-center placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-none py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
+                                type="text"
+                                inputMode="numeric"
+                            />
+                            <div className="button rounded-l-none px-4 pl-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square">
+                                <BsTriangleFill className="text-[#d62828] rotate-90 dark:text-anti-flash" />
+                            </div>
+                        </div>
                     </div>
                 )
             ) : (

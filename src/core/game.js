@@ -47,9 +47,10 @@ export function Game(difficulty = 1) {
                 res = res.map((e) => (e < 0 ? "(" + e + ")" : e));
                 return res.join(" ");
             };
-            console.log(operationMaker(operation), operation);
-            let question = "1 + 1";
-            let answer = 2;
+            let res = operationMaker(operation);
+            console.log(res, eval(res), operation);
+            let question = res;
+            let answer = eval(res);
             return { question, answer, questionDifficulty };
         },
     };
