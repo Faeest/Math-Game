@@ -4,8 +4,8 @@ import { Game } from "@/core/game";
 import gsap from "gsap";
 import _ from "lodash";
 import { useEffect, useRef, useState } from "react";
-import { BsFlag, BsFlagFill, BsTriangleFill } from "react-icons/bs";
-import { FaArrowRight, FaChevronRight, FaCircleChevronRight, FaFlag } from "react-icons/fa6";
+import { BsTriangleFill } from "react-icons/bs";
+import { FaFlag } from "react-icons/fa6";
 export default function Games() {
     const { lang } = useAppContext();
     const [gameInstance, setGameInstance] = useState(null);
@@ -13,6 +13,13 @@ export default function Games() {
     const input = useRef();
     const questionElement = useRef();
     const tl = gsap.timeline();
+    const clearAll = () => {
+        setGameInstance(null);
+        setBank([]);
+    };
+    const skip = () => {
+        setGameInstance({ ...gameInstance, answering: true });
+    };
     const animate = (answer = false) => {
         tl.clear()
             .set("#app-container", { backgroundColor: answer ? "2a9d8f00" : "#d6282800" })
@@ -31,6 +38,7 @@ export default function Games() {
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
         if (parseFloat(gameInstance.answer) == input.current.value) {
+            let addedScore = gameInstance.scoreDecider(gameInstance.question, gameInstance.answer);
             animate(true);
             setBank([
                 ...bank,
@@ -38,9 +46,10 @@ export default function Games() {
                     question: gameInstance.question,
                     answer: gameInstance.answer,
                     userAnswer: input.current.value,
+                    score: addedScore,
                 },
             ]);
-            setGameInstance({ ...gameInstance, answering: true });
+            setGameInstance({ ...gameInstance, answering: true, score: gameInstance.score + addedScore });
         } else {
             animate();
             wrongAnimation();
@@ -91,19 +100,28 @@ export default function Games() {
                         >
                             {!gameInstance.answering || gameInstance.question ? gameInstance.question : ""}
                         </div>
-                        <div className="flex h-fit md:mt-20 items-stretch">
-                            <div className="button rounded-r-none px-4 pr-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square">
+                        <div className="flex flex-wrap w-fit max-w-[75%] md:max-w-[60%] lg:max-w-[40%] justify-center h-fit cursor-pointer md:mt-20 items-stretch">
+                            <div
+                                onClick={clearAll}
+                                className="button rounded-none rounded-tl-md px-4 pr-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square"
+                            >
                                 <FaFlag className="text-[#d62828] dark:text-anti-flash" />
                             </div>
                             <input
                                 ref={input}
                                 onKeyUp={answering}
-                                className="appearance-none font-semibold z-50 w-[200px] text-center placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-none py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
+                                className="appearance-none grow w-[200px] shrink font-semibold z-40 text-center placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-none py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
                                 type="text"
                                 inputMode="numeric"
                             />
-                            <div className="button rounded-l-none px-4 pl-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square">
+                            <div
+                                onClick={skip}
+                                className="button rounded-none rounded-tr-md px-4 pl-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square"
+                            >
                                 <BsTriangleFill className="text-[#d62828] rotate-90 dark:text-anti-flash" />
+                            </div>
+                            <div className="w-full transition grow dark:bg-[--primary] bg-anti-flash rounded-b-md p-2 text-3xl font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50">
+                                {gameInstance.score ?? 0}
                             </div>
                         </div>
                     </div>

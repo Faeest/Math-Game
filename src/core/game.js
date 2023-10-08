@@ -1,7 +1,8 @@
-import { random } from "lodash";
+import { random, round } from "lodash";
 
 export function Game(difficulty = 1) {
     let result = {
+        score: 0,
         answer: null,
         question: null,
         answering: false,
@@ -52,6 +53,51 @@ export function Game(difficulty = 1) {
             let question = res;
             let answer = eval(res);
             return { question, answer, questionDifficulty };
+        },
+        scoreDecider(question = "1 + 1", userAnswer = "2") {
+            let factor = [];
+            let splittedQ = question.split(" ");
+            let operators = [
+                splittedQ.filter((e) => e == "+"),
+                splittedQ.filter((e) => e == "-"),
+                splittedQ.filter((e) => e == "*"),
+                splittedQ.filter((e) => e == "/"),
+            ];
+            factor.push({
+                value: userAnswer.length,
+                pow: 0.5,
+                multiplier: 10,
+            }); // ! by it's answer length
+            factor.push({
+                value: question.length,
+                multiplier: 100,
+            }); // ! by it's length
+            factor.push({
+                value: operators[0].length,
+                multiplier: 50,
+            }); // ! by it's + operator
+            factor.push({
+                value: operators[1].length,
+                multiplier: 100,
+            }); // ! by it's - operator
+            factor.push({
+                value: operators[2].length,
+                multiplier: 500,
+            }); // ! by it's * operator
+            factor.push({
+                value: operators[3].length,
+                multiplier: 2000,
+            }); // ! by it's / operator
+            let summary = factor
+                .map((e) => {
+                    let res = e.value;
+                    if (!e.value || (!e.multiplier && !e.pow)) return 0;
+                    if (e.multiplier) res = res * e.multiplier;
+                    if (e.pow) res = round(Math.pow(res, e.pow));
+                })
+                .reduce((a, c) => a + c);
+            console.log(summary, factor);
+            return summary;
         },
     };
     return result;
