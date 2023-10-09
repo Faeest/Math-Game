@@ -14,13 +14,13 @@ export default function App({ Component, pageProps: { session, ...pageProps }, r
         <AppContextProvider route={state?.route} locale={locale}>
             <NextNProgress
                 height={4}
-                options={{ easing: 'ease-out', speed: 300 }}
+                options={{ easing: 'ease-out', speed: 150 }}
                 transformCSS={(css) => {
                     // console.log(css);
                     return (
                         <style>
                             {css +
-                                `#nprogress .spinner-icon {display:none;}#nprogress .bar {background:var(--primary);}#nprogress .peg {box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary);opacity: 1;}`}
+                                `#nprogress .spinner-icon {display:none;}#nprogress .bar {background:var(--primary);}#nprogress .peg {box-shadow: 0 0 0px var(--primary), 0 0 0px var(--primary);opacity: 1;}`}
                         </style>
                     );
                 }}

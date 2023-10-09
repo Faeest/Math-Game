@@ -14,7 +14,7 @@ export function Game(difficulty = 1) {
         countDownSeconds: 3,
         questionMaker() {
             let questionDifficulty = random(result.diffculty, result.diffculty + 1, false);
-            let operation = random(2, questionDifficulty + 2, false);
+            let operation = random(2, questionDifficulty + 1, false);
             let sign = ["+", "-", "*", "/"];
             let parenthesisPossibility = questionDifficulty == 1 ? 0 : questionDifficulty == 2 ? 10 : questionDifficulty == 3 ? 15 : 20;
             let operationMaker = (operation) => {
@@ -64,39 +64,59 @@ export function Game(difficulty = 1) {
                 splittedQ.filter((e) => e == "/"),
             ];
             factor.push({
+                // ? f(x) = (x*2)^2
                 value: userAnswer.length,
-                pow: 0.5,
-                multiplier: 10,
+                pow: 2,
+                multiplier: 2,
             }); // ! by it's answer length
             factor.push({
-                value: question.length,
-                multiplier: 100,
+                // ? f(x) = (x*2)^3
+                value: userAnswer.includes(".") ? userAnswer.split(".")[0].length : userAnswer.length,
+                pow: 3,
+                multiplier: 2,
+            }); // ! by it's number before comma
+            factor.push({
+                // ? f(x) = (x*2)^3
+                value: userAnswer.includes(".") ? userAnswer.split(".")[1].length : 0,
+                pow: 3,
+                multiplier: 2,
+            }); // ! by it's number after comma
+            factor.push({
+                // ? f(x) = x*80
+                value: question.replaceAll("(", "").replaceAll(")", "").replaceAll(" ", "").length,
+                multiplier: 80,
             }); // ! by it's length
             factor.push({
+                // ? f(x) = x*100
                 value: operators[0].length,
-                multiplier: 50,
+                multiplier: 100,
             }); // ! by it's + operator
             factor.push({
+                // ? f(x) = x*200
                 value: operators[1].length,
-                multiplier: 100,
+                multiplier: 200,
             }); // ! by it's - operator
             factor.push({
+                // ? f(x) = x*500
                 value: operators[2].length,
                 multiplier: 500,
             }); // ! by it's * operator
             factor.push({
+                // ? f(x) = x*1200
                 value: operators[3].length,
-                multiplier: 2000,
+                multiplier: 1200,
             }); // ! by it's / operator
-            let summary = factor
-                .map((e) => {
-                    let res = e.value;
-                    if (!e.value || (!e.multiplier && !e.pow)) return 0;
-                    if (e.multiplier) res = res * e.multiplier;
-                    if (e.pow) res = round(Math.pow(res, e.pow));
-                })
-                .reduce((a, c) => a + c);
-            console.log(summary, factor);
+            let summary = factor.map((e) => {
+                let res = e.value;
+                if (!e.value || (!e.multiplier && !e.pow)) return 0;
+                if (e.multiplier) res = res * e.multiplier;
+                if (e.pow) res = round(Math.pow(res, e.pow));
+                return userAnswer.startsWith("-") ? res * 1.2 : res; // ! multiplier if minus
+            });
+            console.log(summary);
+            summary = summary.reduce((a, c) => a + c);
+            summary = Math.round(summary);
+            console.log(summary);
             return summary;
         },
     };

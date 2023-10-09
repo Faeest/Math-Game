@@ -82,21 +82,24 @@
         @apply !gap-0;
     }
     .sidenav-show {
-        @apply max-lg:!w-[90px] max-lg:!px-3 !border-4;
+        @apply max-lg:!w-[90px] !min-w-fit max-lg:!px-3 !border-4;
     }
     .games-radio-1,
     .games-radio-2 {
         --color: var(--primary);
-        @apply border-2 w-1/4 min-w-fit text-center border-[--color] hover:brightness-75 dark:hover:brightness-100 select-none brightness-90 dark:brightness-125 bg-transparent text-[--color] transition px-[1.25rem] py-[.475rem] cursor-pointer rounded-sm rounded-b-none font-semibold;
+        @apply sm:border-2 max-sm:ring-2 ring-[--color] w-1/4 max-sm:w-full min-w-fit text-center border-[--color] hover:brightness-75 dark:hover:brightness-100 select-none brightness-90 dark:brightness-125 bg-transparent text-[--color] transition px-[1.25rem] py-[.475rem] cursor-pointer sm:rounded-sm rounded-b-none font-semibold;
     }
     .games-radio-1 {
-        @apply border-b-0;
+        @apply sm:border-b-0;
     }
     .games-radio-2 {
-        @apply border-t-0;
+        @apply sm:border-t-0;
     }
     .games-radio-checked {
-        @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100;
+        @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100 max-sm:z-[100];
+    }
+    .menu-parent {
+        @apply flex max-sm:flex-wrap max-sm:last:mt-4 max-sm:[&>*]:my-[1px] sm:-my-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center;
     }
     .countdown {
         --duration: 3s;

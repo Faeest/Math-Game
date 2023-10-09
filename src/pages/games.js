@@ -37,8 +37,8 @@ export default function Games() {
     };
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
-        if (parseFloat(gameInstance.answer) == input.current.value) {
-            let addedScore = gameInstance.scoreDecider(gameInstance.question, gameInstance.answer);
+        if (parseFloat(gameInstance.answer) == input.current.value && !isNaN(input.current.value)) {
+            let addedScore = gameInstance.scoreDecider(gameInstance.question, input.current.value);
             animate(true);
             setBank([
                 ...bank,
@@ -100,27 +100,29 @@ export default function Games() {
                         >
                             {!gameInstance.answering || gameInstance.question ? gameInstance.question : ""}
                         </div>
-                        <div className="flex flex-wrap w-fit max-w-[75%] md:max-w-[60%] lg:max-w-[40%] justify-center h-fit cursor-pointer md:mt-20 items-stretch">
-                            <div
-                                onClick={clearAll}
-                                className="button rounded-none rounded-tl-md px-4 pr-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square"
-                            >
-                                <FaFlag className="text-[#d62828] dark:text-anti-flash" />
+                        <div className="flex flex-wrap w-full max-sm:max-w-[400px] sm:w-[400px] sm:px-10 justify-center h-fit cursor-pointer md:mt-20 items-stretch">
+                            <div className="flex w-full">
+                                <div
+                                    onClick={clearAll}
+                                    className="button rounded-none rounded-tl-md px-4 z-50 ring-4 dark:ring-0 bg-static-anti-flash dark:bg-[#d62828] ring-[--primary] flex justify-center items-center"
+                                >
+                                    <FaFlag className="text-[#d62828] dark:text-anti-flash" />
+                                </div>
+                                <input
+                                    ref={input}
+                                    onKeyUp={answering}
+                                    className="appearance-none shrink min-w-[100px] grow font-semibold z-40 text-center placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-none py-3 px-3 leading-tight focus:outline-none lighter-hover transition"
+                                    type="text"
+                                    inputMode="numeric"
+                                />
+                                <div
+                                    onClick={skip}
+                                    className="button rounded-none rounded-tr-md px-4 z-50 ring-4 dark:ring-0 bg-static-anti-flash dark:bg-[#d62828] ring-[--primary] flex justify-center items-center"
+                                >
+                                    <BsTriangleFill className="text-[#d62828] rotate-90 dark:text-anti-flash" />
+                                </div>
                             </div>
-                            <input
-                                ref={input}
-                                onKeyUp={answering}
-                                className="appearance-none grow w-[200px] shrink font-semibold z-40 text-center placeholder:text-static-onyx/60 ring-4 dark:ring-0 ring-[--primary] bg-static-anti-flash text-onyx rounded-none py-3 px-3 leading-tight focus:outline-none focus:!ring-4 lighter-hover transition"
-                                type="text"
-                                inputMode="numeric"
-                            />
-                            <div
-                                onClick={skip}
-                                className="button rounded-none rounded-tr-md px-4 pl-[calc(1rem_+_4px)] ring-4 dark:ring-0 dark:bg-[#d62828] ring-[--primary] flex justify-center items-center aspect-square"
-                            >
-                                <BsTriangleFill className="text-[#d62828] rotate-90 dark:text-anti-flash" />
-                            </div>
-                            <div className="w-full transition grow dark:bg-[--primary] bg-anti-flash rounded-b-md p-2 text-3xl font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50">
+                            <div className="w-full transition grow dark:bg-[--primary] bg-anti-flash rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50">
                                 {gameInstance.score ?? 0}
                             </div>
                         </div>
@@ -132,7 +134,7 @@ export default function Games() {
                         {lang?.games?.[0] ?? "Choose Mode :"}
                     </div>
                     <div className="flex flex-wrap justify-center pt-8">
-                        <div className="flex max-sm:[&>*]:-mx-[1px] -mb-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center">
+                        <div className="menu-parent">
                             <input id="classic" name="mode" className={`peer hidden`} type="radio" />
                             <label className="peer-[#classic]:peer-checked:games-radio-checked games-radio-1" htmlFor="classic">
                                 Classic
@@ -147,9 +149,9 @@ export default function Games() {
                             </label>
                         </div>
                         {/*  */}
-                        <div className="devider w-full grow border border-[--primary]"></div>
+                        <div className="devider w-full grow border border-[--primary] max-sm:hidden"></div>
                         {/*  */}
-                        <div className="flex max-sm:[&>*]:-mx-[1px] -mt-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center">
+                        <div className="menu-parent">
                             <input id="easy" name="difficulty" className={`peer hidden`} type="radio" />
                             <label className="peer-[#easy]:peer-checked:games-radio-checked games-radio-2" htmlFor="easy">
                                 Easy
