@@ -56,7 +56,8 @@ export default function Games() {
         }
     };
     const startGame = () => {
-        setGameInstance(Game());
+        let diff = document?.querySelector("input[name=difficulty]:checked")?.dataset?.difficulty;
+        setGameInstance(Game(Number(diff) || 1));
     };
     useEffect(() => {
         const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
@@ -152,15 +153,15 @@ export default function Games() {
                         <div className="devider w-full grow border border-[--primary] max-sm:hidden"></div>
                         {/*  */}
                         <div className="menu-parent">
-                            <input id="easy" name="difficulty" className={`peer hidden`} type="radio" />
+                            <input data-difficulty={1} id="easy" name="difficulty" className={`peer hidden`} type="radio" />
                             <label className="peer-[#easy]:peer-checked:games-radio-checked games-radio-2" htmlFor="easy">
                                 Easy
                             </label>
-                            <input defaultChecked id="normal" name="difficulty" className={`peer hidden`} type="radio" />
+                            <input data-difficulty={2} defaultChecked id="normal" name="difficulty" className={`peer hidden`} type="radio" />
                             <label className="peer-[#normal]:peer-checked:games-radio-checked games-radio-2" htmlFor="normal">
                                 Normal
                             </label>
-                            <input id="hard" name="difficulty" className={`peer hidden`} type="radio" />
+                            <input data-difficulty={3} id="hard" name="difficulty" className={`peer hidden`} type="radio" />
                             <label className="peer-[#hard]:peer-checked:games-radio-checked games-radio-2" htmlFor="hard">
                                 hard
                             </label>

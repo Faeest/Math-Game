@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-tooltip/dist/react-tooltip.css'
 import { useEffect } from "react";
 import updateColor from "@/utilities/primary";
 import { AppContextProvider } from "@/context/AppContext";

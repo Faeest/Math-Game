@@ -43,12 +43,23 @@
 @layer components {
     .picker {
         --picker-color: var(--primary);
-        @apply transition rounded w-[32px] h-[32px] border-4 cursor-pointer border-[--picker-color] checked:bg-[--picker-color];
+        @apply transition rounded max-sm:w-[64px] max-md:w-[42px] w-[32px] h-[32px] border-4 cursor-pointer border-[--picker-color] checked:bg-[--picker-color];
+        appearance: none;
+    }
+    .picker-rainbow {
+        -webkit-animation: rainbow 5s ease infinite;
+        -z-animation: rainbow 5s ease infinite;
+        -o-animation: rainbow 5s ease infinite;
+        animation: rainbow 5s ease infinite;
+        --picker-color: var(--primary);
+        @apply transition rounded max-sm:w-[64px] max-md:w-[42px] w-[32px] h-[32px] checked:p-0 checked:border-4 border-[--primary-light] p-[4px] cursor-pointer;
+        background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+        background-size: 1800% 1800%;
         appearance: none;
     }
     .theme-picker {
         --picker-color: var(--primary);
-        @apply transition rounded w-[32px] h-[32px] cursor-pointer border-4 border-[--picker-color] ring-[--picker-color] checked:ring-2 checked:ring-[--primary-dark] checked:border-[--primary-dark] dark:checked:ring-[--primary-light] dark:checked:border-[--primary-light];
+        @apply transition rounded max-sm:w-[64px] max-md:w-[42px] w-[32px] h-[32px] cursor-pointer border-4 border-[--picker-color] ring-[--picker-color] checked:ring-2 checked:ring-[--primary-dark] checked:border-[--primary-dark] dark:checked:ring-[--primary-light] dark:checked:border-[--primary-light];
         appearance: none;
     }
     .button {
@@ -105,6 +116,50 @@
         --duration: 3s;
         background-size: 400% 100%;
         @apply animate-[countdown-to-2_var(--duration)_infinite] md:animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] md:bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
+    }
+}
+@-webkit-keyframes rainbow {
+    0% {
+        background-position: 0% 82%;
+    }
+    50% {
+        background-position: 100% 19%;
+    }
+    100% {
+        background-position: 0% 82%;
+    }
+}
+@-moz-keyframes rainbow {
+    0% {
+        background-position: 0% 82%;
+    }
+    50% {
+        background-position: 100% 19%;
+    }
+    100% {
+        background-position: 0% 82%;
+    }
+}
+@-o-keyframes rainbow {
+    0% {
+        background-position: 0% 82%;
+    }
+    50% {
+        background-position: 100% 19%;
+    }
+    100% {
+        background-position: 0% 82%;
+    }
+}
+@keyframes rainbow {
+    0% {
+        background-position: 0% 82%;
+    }
+    50% {
+        background-position: 100% 19%;
+    }
+    100% {
+        background-position: 0% 82%;
     }
 }
 @keyframes countdown-to-2 {

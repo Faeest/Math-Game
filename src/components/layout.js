@@ -23,7 +23,7 @@ export default function Layout({ children }) {
                 <BsThreeDots className="aspect-square dark:text-[--primary-light] text-[--primary]" />
             </div>
             <Navbar />
-            <div id="app-container" className="flex flex-col w-full grow rounded-xl border-4 border-primary">{children}</div>
+            <div id="app-container" className="flex flex-col w-full grow rounded-xl border-4 border-primary overflow-hidden">{children}</div>
         </main>
     );
 }

@@ -52,11 +52,15 @@ function SignUp() {
                     />
                 </label>
                 <div className="w-full" />
+                <button className="button sm:hidden rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
+                    <FaArrowRightToBracket />
+                    {lang?.auth?.[1] ?? "Register"}
+                </button>
                 <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2 flex items-center gap-x-2" href={"/auth/signin"}>
                     <FaArrowRightFromBracket />
                     {lang?.auth?.[0] ?? "Login"}
                 </Link>
-                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
+                <button className="button max-sm:hidden rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
                     <FaArrowRightToBracket />
                     {lang?.auth?.[1] ?? "Register"}
                 </button>

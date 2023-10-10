@@ -54,31 +54,37 @@ function Signin() {
                     />
                 </label>
                 <div className="w-full" />
+                <button className="button sm:hidden rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
+                    <FaArrowRightFromBracket />
+                    {lang?.auth?.[0] ?? "Login"}
+                </button>
                 <Link className="button rounded-lg text-onyx bg-[--primary-light] mt-4 mx-2 flex items-center gap-x-2" href={"/auth/signup"}>
                     <FaArrowRightToBracket />
                     {lang?.auth?.[1] ?? "Register"}
                 </Link>
-                <button className="button rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
+                <button className="button max-sm:hidden rounded-lg text-anti-flash bg-[--primary] mt-4 mx-2 flex items-center gap-x-2" type="submit">
                     <FaArrowRightFromBracket />
                     {lang?.auth?.[0] ?? "Login"}
                 </button>
             </form>
-            <button
-                className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2"
-                id="google"
-                onClick={handleProvider}
-            >
-                <FaGoogle />
-                {lang?.auth?.[4] ?? "Continue with Google"}
-            </button>
-            <button
-                className="button rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2"
-                id="github"
-                onClick={handleProvider}
-            >
-                <FaGithub />
-                {lang?.auth?.[5] ?? "Continue with Github"}
-            </button>
+            <div className="flex flex-col w-full max-sm:flex-row justify-center gap-x-4">
+                <button
+                    className="button max-sm:p-4 max-sm:text-2xl max-sm:mx-0 rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2"
+                    id="google"
+                    onClick={handleProvider}
+                >
+                    <FaGoogle />
+                    <span className="max-sm:hidden">{lang?.auth?.[4] ?? "Continue with Google"}</span>
+                </button>
+                <button
+                    className="button max-sm:p-4 max-sm:text-2xl max-sm:mx-0 rounded-lg text-onyx bg-[--primary-light] mt-4 w-fit mx-auto flex items-center gap-x-2"
+                    id="github"
+                    onClick={handleProvider}
+                >
+                    <FaGithub />
+                    <span className="max-sm:hidden">{lang?.auth?.[5] ?? "Continue with Github"}</span>
+                </button>
+            </div>
         </Layout>
     );
 }
