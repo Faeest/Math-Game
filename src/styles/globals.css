@@ -117,6 +117,12 @@
         background-size: 400% 100%;
         @apply animate-[countdown-to-2_var(--duration)_infinite] md:animate-[countdown-to_var(--duration)_infinite] ease-linear transition-[background-position] duration-[--duration] md:bg-[linear-gradient(45deg,transparent_35%,rgba(var(--primary-rgb),0.5)_35%,rgba(var(--primary-rgb),0.5)_45%,transparent_45%,transparent_55%,rgba(var(--primary-rgb),0.5)_55%,rgba(var(--primary-rgb),0.5)_65%,transparent_65%)];
     }
+    #score-and-time {
+        background-size: 200% 100%;
+        background-position: var(--bg-pos) 100%;
+        @apply transition-all bg-[linear-gradient(90deg,var(--anti-flash)_50%,var(--primary-lighter)_50%,var(--primary-lighter)_100%)] dark:bg-[linear-gradient(90deg,var(--primary)_50%,var(--primary-darker)_50%,var(--primary-darker)_100%)];
+        --bg-pos: 0%;
+    }
 }
 @-webkit-keyframes rainbow {
     0% {

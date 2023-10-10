@@ -2,10 +2,12 @@ import Layout from "@/components/layout";
 import { useAppContext } from "@/context/AppContext";
 import { Game } from "@/core/game";
 import gsap from "gsap";
-import _ from "lodash";
+import { random, round } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { BsTriangleFill } from "react-icons/bs";
 import { FaFlag } from "react-icons/fa6";
+import { useTimer } from "react-timer-hook";
+import { toast } from "react-toastify";
 export default function Games() {
     const { lang } = useAppContext();
     const [gameInstance, setGameInstance] = useState(null);
@@ -13,9 +15,16 @@ export default function Games() {
     const input = useRef();
     const questionElement = useRef();
     const tl = gsap.timeline();
+    const gameOver = () => {
+        console.log(gameInstance.score, bank);
+        clearAll();
+        toast(`Your score is ${gameInstance.score}`,{ type: "info", theme: localStorage.theme })
+    };
+    const timer = useTimer({ expiryTimestamp: new Date(), onExpire: gameOver, autoStart: false });
     const clearAll = () => {
         setGameInstance(null);
         setBank([]);
+        timer.pause();
     };
     const skip = () => {
         setGameInstance({ ...gameInstance, answering: true });
@@ -31,8 +40,8 @@ export default function Games() {
         gsap.fromTo(
             questionElement.current,
             0.01,
-            { x: () => _.random(-5, -20), rotate: () => _.random(-1, -5) },
-            { x: () => _.random(5, 20), rotate: () => _.random(1, 5), clearProps: "x", repeat: 20 }
+            { x: () => random(-5, -20), rotate: () => random(-1, -5) },
+            { x: () => random(5, 20), rotate: () => random(1, 5), clearProps: "x", repeat: 20 }
         );
     };
     const answering = (event) => {
@@ -58,6 +67,9 @@ export default function Games() {
     const startGame = () => {
         let diff = document?.querySelector("input[name=difficulty]:checked")?.dataset?.difficulty;
         setGameInstance(Game(Number(diff) || 1));
+        let time = new Date();
+        time.setSeconds(time.getSeconds() + 6 + 3); // 1 minutes timer
+        timer.restart(time, true);
     };
     useEffect(() => {
         const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
@@ -123,7 +135,11 @@ export default function Games() {
                                     <BsTriangleFill className="text-[#d62828] rotate-90 dark:text-anti-flash" />
                                 </div>
                             </div>
-                            <div className="w-full transition grow dark:bg-[--primary] bg-anti-flash rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50">
+                            <div
+                                style={{ "--bg-pos": 100 - round((timer.totalSeconds / 60) * 100, 1) + "%" }}
+                                id="score-and-time"
+                                className="w-full transition grow rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50"
+                            >
                                 {gameInstance.score ?? 0}
                             </div>
                         </div>

@@ -99,19 +99,19 @@ export function Game(difficulty = 1) {
             factor.push({
                 // ? f(x) = x*500
                 value: operators[2].length,
-                multiplier: 500,
+                multiplier: 1000,
             }); // ! by it's * operator
             factor.push({
                 // ? f(x) = x*1200
                 value: operators[3].length,
-                multiplier: 1200,
+                multiplier: 2000,
             }); // ! by it's / operator
             let summary = factor.map((e) => {
                 let res = e.value;
                 if (!e.value || (!e.multiplier && !e.pow)) return 0;
                 if (e.multiplier) res = res * e.multiplier;
                 if (e.pow) res = round(Math.pow(res, e.pow));
-                return userAnswer.startsWith("-") ? res * 1.2 : res; // ! multiplier if minus
+                return userAnswer.startsWith("-") ? res * 1.3 : res; // ! multiplier if minus
             });
             console.log(summary);
             summary = summary.reduce((a, c) => a + c);
@@ -123,7 +123,6 @@ export function Game(difficulty = 1) {
     return result;
 }
 
-// ! scoring system
 // ! timer
 // ! test
 // ? upload record and the answer
