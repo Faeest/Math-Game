@@ -96,7 +96,8 @@
         @apply max-lg:!w-[90px] !min-w-fit max-lg:!px-3 !border-4;
     }
     .games-radio-1,
-    .games-radio-2 {
+    .games-radio-2,
+    .games-radio-3 {
         --color: var(--primary);
         @apply sm:border-2 max-sm:ring-2 ring-[--color] w-1/4 max-sm:w-full min-w-fit text-center border-[--color] hover:brightness-75 dark:hover:brightness-100 select-none brightness-90 dark:brightness-125 bg-transparent text-[--color] transition px-[1.25rem] py-[.475rem] cursor-pointer sm:rounded-sm rounded-b-none font-semibold;
     }
@@ -105,6 +106,9 @@
     }
     .games-radio-2 {
         @apply sm:border-t-0;
+    }
+    .games-radio-3 {
+        @apply rounded-none -mx-[1px] hover:z-[110] border-2 ring-0 first-of-type:rounded-l-md last-of-type:rounded-r-md;
     }
     .games-radio-checked {
         @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100 max-sm:z-[100];

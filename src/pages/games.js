@@ -14,11 +14,12 @@ export default function Games() {
     const [bank, setBank] = useState([]);
     const input = useRef();
     const questionElement = useRef();
+    const [description, setDescription] = useState("");
     const tl = gsap.timeline();
     const gameOver = () => {
         console.log(gameInstance.score, bank);
         clearAll();
-        toast(`Your score is ${gameInstance.score}`,{ type: "info", theme: localStorage.theme })
+        toast(`Your score is ${gameInstance.score}`, { type: "info", theme: localStorage.theme });
     };
     const timer = useTimer({ expiryTimestamp: new Date(), onExpire: gameOver, autoStart: false });
     const clearAll = () => {
@@ -63,13 +64,17 @@ export default function Games() {
             animate();
             wrongAnimation();
         }
+        input.current.value = "";
     };
     const startGame = () => {
-        let diff = document?.querySelector("input[name=difficulty]:checked")?.dataset?.difficulty;
-        setGameInstance(Game(Number(diff) || 1));
+        let diff = document?.querySelector("input[name=difficulty]:checked");
+        let mode = document?.querySelector("input[name=mode]:checked")?.id;
+        let totalTime = document?.querySelector("input[name=time]:checked");
+        setGameInstance(Game(Number(diff?.dataset?.difficulty) || 1, Number(totalTime?.dataset?.time) || 60));
         let time = new Date();
-        time.setSeconds(time.getSeconds() + 6 + 3); // 1 minutes timer
+        time.setSeconds(time.getSeconds() + Number(totalTime?.dataset?.time) + 3); // ! timer
         timer.restart(time, true);
+        setDescription(`${diff?.id} - ${mode} - ${totalTime?.id?.replace?.("time-", "")}`);
     };
     useEffect(() => {
         const updateGameInstance = (data = {}) => setGameInstance({ ...gameInstance, ...data });
@@ -136,12 +141,15 @@ export default function Games() {
                                 </div>
                             </div>
                             <div
-                                style={{ "--bg-pos": 100 - round((timer.totalSeconds / 60) * 100, 1) + "%" }}
+                                style={{ "--bg-pos": 100 - round((timer.totalSeconds / gameInstance.time) * 100, 1) + "%" }}
                                 id="score-and-time"
                                 className="w-full transition grow rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50"
                             >
-                                {gameInstance.score ?? 0}
+                                {gameInstance.score ?? 0}-{timer.totalSeconds}-{gameInstance.time}
                             </div>
+                        </div>
+                        <div id="game-description" className="dark:text-anti-flash text-onyx font-semibold">
+                            {description}
                         </div>
                     </div>
                 )
@@ -182,6 +190,20 @@ export default function Games() {
                                 hard
                             </label>
                         </div>
+                    </div>
+                    <div className="flex">
+                        <input data-time={30} defaultChecked id="time-30s" name="time" className={`peer hidden`} type="radio" />
+                        <label className="peer-[#time-30s]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-30s">
+                            30s
+                        </label>
+                        <input data-time={60} id="time-1m" name="time" className={`peer hidden`} type="radio" />
+                        <label className="peer-[#time-1m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-1m">
+                            1m
+                        </label>
+                        <input data-time={120} id="time-2m" name="time" className={`peer hidden`} type="radio" />
+                        <label className="peer-[#time-2m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-2m">
+                            2m
+                        </label>
                     </div>
                     {/* <div className="w-full border-2 border-[rgba(var(--primary-rgb))] mt-10"></div> */}
                     <div onClick={startGame} className="button bg-[--primary] text-anti-flash cursor-pointer mt-10">

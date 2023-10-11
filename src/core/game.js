@@ -1,7 +1,8 @@
 import { random, round } from "lodash";
 
-export function Game(difficulty = 1) {
+export function Game(difficulty = 1, time = 60) {
     let result = {
+        time:time,
         score: 0,
         answer: null,
         question: null,
@@ -49,7 +50,6 @@ export function Game(difficulty = 1) {
                 return res.join(" ");
             };
             let res = operationMaker(operation);
-            console.log(res, eval(res), operation);
             let question = res;
             let answer = eval(res);
             return { question, answer, questionDifficulty };
