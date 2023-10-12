@@ -15,6 +15,7 @@ export default function Games() {
     const input = useRef();
     const questionElement = useRef();
     const [description, setDescription] = useState("");
+    const [invertedProgress, setInvertedProgress] = useState("");
     const tl = gsap.timeline();
     const gameOver = () => {
         console.log(gameInstance.score, bank);
@@ -47,7 +48,7 @@ export default function Games() {
     };
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
-        if(!isNaN(input.current.value)) (animate(),wrongAnimation());
+        if (!isNaN(input.current.value)) animate(), wrongAnimation();
         let rounding = input.current.value;
         let same = parseFloat(gameInstance.answer) == input.current.value;
         if (same || rounding) {
@@ -73,10 +74,12 @@ export default function Games() {
         let diff = document?.querySelector("input[name=difficulty]:checked");
         let mode = document?.querySelector("input[name=mode]:checked")?.id;
         let totalTime = document?.querySelector("input[name=time]:checked");
-        setGameInstance(Game(Number(diff?.dataset?.difficulty) || 1, Number(totalTime?.dataset?.time) || 60));
-        let time = new Date();
-        time.setSeconds(time.getSeconds() + Number(totalTime?.dataset?.time) + 3); // ! timer
-        timer.restart(time, true);
+        setGameInstance(Game(Number(diff?.dataset?.difficulty) || 1, Number(totalTime?.dataset?.time) || 60, mode || "survival"));
+        if (mode != "inverted") {
+            let time = new Date();
+            time.setSeconds(time.getSeconds() + Number(totalTime?.dataset?.time) + 3); // ! timer
+            timer.restart(time, true);
+        }
         setDescription(`${diff?.id} - ${mode} - ${totalTime?.id?.replace?.("time-", "")}`);
     };
     useEffect(() => {
@@ -102,6 +105,18 @@ export default function Games() {
             }
         }
     }, [gameInstance]);
+    useEffect(() => {
+        console.log(1);
+        document.querySelectorAll("input[name=mode]").forEach((e) => {
+            e.onchange = (x) => {
+                if (!x.target.checked) return;
+                let timeOption = document.querySelectorAll("input[name=time] ~ label");
+                console.log(x.target.id != "inverted");
+                timeOption.forEach((e) => (x.target.id != "inverted" ? e.removeAttribute("data-disabled") : (e.dataset.disabled = true)));
+            };
+        });
+        return () => document.querySelectorAll("input[name=mode]").forEach((e) => (e.onchange = null));
+    }, []);
     return (
         <Layout>
             {gameInstance ? (
@@ -144,7 +159,11 @@ export default function Games() {
                                 </div>
                             </div>
                             <div
-                                style={{ "--bg-pos": 100 - round((timer.totalSeconds / gameInstance.time) * 100, 1) + "%" }}
+                                style={{
+                                    "--bg-pos":
+                                        (gameInstance?.mode != "inverted" ? invertedProgress : 100 - round((timer.totalSeconds / gameInstance.time) * 100, 1)) +
+                                        "%",
+                                }}
                                 id="score-and-time"
                                 className="w-full transition grow rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50"
                             >
@@ -196,15 +215,15 @@ export default function Games() {
                     </div>
                     <div className="flex">
                         <input data-time={30} defaultChecked id="time-30s" name="time" className={`peer hidden`} type="radio" />
-                        <label className="peer-[#time-30s]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-30s">
+                        <label className="data-[disabled]:!brightness-75 peer-[#time-30s]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-30s">
                             30s
                         </label>
                         <input data-time={60} id="time-1m" name="time" className={`peer hidden`} type="radio" />
-                        <label className="peer-[#time-1m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-1m">
+                        <label className="data-[disabled]:!brightness-75 peer-[#time-1m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-1m">
                             1m
                         </label>
                         <input data-time={120} id="time-2m" name="time" className={`peer hidden`} type="radio" />
-                        <label className="peer-[#time-2m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-2m">
+                        <label className="data-[disabled]:!brightness-75 peer-[#time-2m]:peer-checked:games-radio-checked games-radio-3" htmlFor="time-2m">
                             2m
                         </label>
                     </div>

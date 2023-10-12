@@ -1,8 +1,9 @@
 import { random, round } from "lodash";
 
-export function Game(difficulty = 1, time = 60) {
+export function Game(difficulty = 1, time = 60, mode = "survival") {
     let result = {
-        time:time,
+        mode: mode,
+        time: time,
         score: 0,
         answer: null,
         question: null,
