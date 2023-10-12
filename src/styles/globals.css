@@ -108,10 +108,10 @@
         @apply sm:border-t-0;
     }
     .games-radio-3 {
-        @apply rounded-none -mx-[1px] hover:z-[110] border-2 ring-0 first-of-type:rounded-l-md last-of-type:rounded-r-md;
+        @apply rounded-none -mx-[1px] border-2 ring-0 first-of-type:rounded-l-md last-of-type:rounded-r-md;
     }
     .games-radio-checked {
-        @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100 max-sm:z-[100];
+        @apply bg-[--color] text-anti-flash hover:brightness-90 brightness-100 hover:z-[110] z-[100];
     }
     .menu-parent {
         @apply flex max-sm:flex-wrap max-sm:last:mt-4 max-sm:[&>*]:my-[1px] sm:-my-[1px] sm:gap-x-2 md:gap-x-6 grow justify-center;

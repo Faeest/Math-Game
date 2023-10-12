@@ -47,7 +47,10 @@ export default function Games() {
     };
     const answering = (event) => {
         if (event.keyCode != 13 || gameInstance.answering) return;
-        if (parseFloat(gameInstance.answer) == input.current.value && !isNaN(input.current.value)) {
+        if(!isNaN(input.current.value)) (animate(),wrongAnimation());
+        let rounding = input.current.value;
+        let same = parseFloat(gameInstance.answer) == input.current.value;
+        if (same || rounding) {
             let addedScore = gameInstance.scoreDecider(gameInstance.question, input.current.value);
             animate(true);
             setBank([
@@ -145,7 +148,7 @@ export default function Games() {
                                 id="score-and-time"
                                 className="w-full transition grow rounded-b-md py-1 dark:py-[7px] text-xl cursor-default font-semibold text-onyx dark:text-anti-flash text-center px-4 ring-4 dark:ring-0 ring-[--primary] z-50"
                             >
-                                {gameInstance.score ?? 0}-{timer.totalSeconds}-{gameInstance.time}
+                                {gameInstance.score ?? 0}
                             </div>
                         </div>
                         <div id="game-description" className="dark:text-anti-flash text-onyx font-semibold">
@@ -160,11 +163,11 @@ export default function Games() {
                     </div>
                     <div className="flex flex-wrap justify-center pt-8">
                         <div className="menu-parent">
-                            <input id="classic" name="mode" className={`peer hidden`} type="radio" />
+                            <input defaultChecked id="classic" name="mode" className={`peer hidden`} type="radio" />
                             <label className="peer-[#classic]:peer-checked:games-radio-checked games-radio-1" htmlFor="classic">
                                 Classic
                             </label>
-                            <input defaultChecked id="survival" name="mode" className={`peer hidden`} type="radio" />
+                            <input id="survival" name="mode" className={`peer hidden`} type="radio" />
                             <label className="peer-[#survival]:peer-checked:games-radio-checked games-radio-1" htmlFor="survival">
                                 Survival
                             </label>
